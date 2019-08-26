@@ -38,7 +38,7 @@ eventbriteRouter
 
 eventbriteRouter
   .route(`/categoriesbyID`)
-  .post((req, res, next) => {
+  .post(jsonBodyParser, (req, res, next) => {
     console.log('new request string', req.body.category)
     const {id} = req.body.id
     const token = userToken
