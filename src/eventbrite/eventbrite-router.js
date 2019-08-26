@@ -6,10 +6,15 @@ const jsonBodyParser = express.json()
 
 eventbriteRouter
   .route(`/`)
-    .get((req, res, next) => { 
-      res.send({url: `https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=I6MVEHHYVS3LD42Z46&redirect_uri=https://warm-bastion-62347.herokuapp.com/api/eventbrite/access`})
-    })
-  
+  .get((req, res, next) => {
+    res.send({ url: `https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=I6MVEHHYVS3LD42Z46&redirect_uri=https://warm-bastion-62347.herokuapp.com/api/eventbrite/access` })
+  })
+
+  .route(`/access`)
+  .get((req, res, next) => {
+    res.send('a string')
+  })
+
 
 
 module.exports = eventbriteRouter
