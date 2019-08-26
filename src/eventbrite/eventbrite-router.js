@@ -56,7 +56,7 @@ eventbriteRouter
   .get((req, res, next) => {
     const token = userToken
     unirest.get('https://www.eventbriteapi.com/v3/subcategories/')
-      .headers({ 'Authorization': `Bearer ${token}`, page: 2 })
+      .headers({ 'Authorization': `Bearer ${token}`, page_number: 2 })
       .end(function (response) {
         console.log(response.body);
         res.send(response.body)
