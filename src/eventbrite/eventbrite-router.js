@@ -39,7 +39,7 @@ eventbriteRouter
 eventbriteRouter
   .route(`/categoriesbyID`)
   .post((req, res, next) => {
-    console.log(req.body, 'request string')
+    console.log(req, 'request string')
     const {id} = req.body.id
     const token = userToken
     unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
@@ -52,7 +52,6 @@ eventbriteRouter
 eventbriteRouter
   .route(`/locations`)
   .post((req, res, next) => {
-    console.log(req)
     const token = userToken
     const { location } = req.body.location
     unirest.get(`https://www.eventbriteapi.com/v3/events/search?${location}.address=vancovuer&location.within=10km&expand=venue`)
