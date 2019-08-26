@@ -4,6 +4,8 @@ const config = require('../config')
 const unirest = require('unirest')
 const jsonBodyParser = express.json()
 
+let userToken;
+
 eventbriteRouter
   .route(`/`)
   .get((req, res, next) => {
@@ -18,22 +20,26 @@ eventbriteRouter
     .headers({"Content-Type": "application/x-www-form-urlencoded"})
     .send({grant_type:"authorization_code", client_id:'I6MVEHHYVS3LD42Z46', client_secret:'V5MDVXPPD7JY5HNODIESMFVP32R63FXOCQS3ONC276SNQQTYBQ', code: `${code}`, redirect_uri: 'https://warm-bastion-62347.herokuapp.com/api/eventbrite/token' })
     .end(function (response) {
+      userToken = response.body.access_token
+      res.redirect('http://localhost:3000/eventbrite')
+    });
+  })
+
+eventbriteRouter
+  .route(`/categories`)
+  .get((req, res, next) => {
+    const token = userToken
+    unirest.get('https://www.eventbrite.com/oauth/token')
+    .headers({'Authorization': `Bearer ${token}` })
+    .end(function (response) {
       console.log(response.body);
-      res.send('success')
-      console.log(response.body.access_token)
+      res.send(response.body)
     });
   })
 
 
 
 
-eventbriteRouter
-  .route(`/token`)
-  .get((req, res, next) => {
-    console.log('string')
-    const token = req.access_token
-    res.json(token).redirect('http://localhost:3000/eventbrite')
-  })
 
 
 
