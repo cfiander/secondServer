@@ -39,11 +39,13 @@ eventbriteRouter
 eventbriteRouter
   .route(`/categoriesbyID`)
   .post((req, res, next) => {
-    const {id} = req.body.category
+    console.log(req, 'request string')
+    const {id} = req.body.id
     const token = userToken
     unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
+        console.log(response.body);
         res.send(response.body)
       });
   })
@@ -51,6 +53,7 @@ eventbriteRouter
 eventbriteRouter
   .route(`/locations`)
   .post((req, res, next) => {
+    console.log(req)
     const token = userToken
     const { location } = req.body.location
     unirest.get(`https://www.eventbriteapi.com/v3/events/search?${location}.address=vancovuer&location.within=10km&expand=venue`)
