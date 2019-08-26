@@ -20,6 +20,7 @@ eventbriteRouter
     .end(function (response) {
       console.log(response.body);
       res.send('success')
+      console.log(response.body.access_token)
     });
   })
 
@@ -29,6 +30,7 @@ eventbriteRouter
 eventbriteRouter
   .route(`/token`)
   .get((req, res, next) => {
+    console.log('string')
     const token = req.access_token
     res.json(token).redirect('http://localhost:3000/eventbrite')
   })
