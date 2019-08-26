@@ -16,7 +16,7 @@ eventbriteRouter
     const code = req.query.code
     unirest.post('https://www.eventbrite.com/oauth/token')
     .headers({"Content-Type": "application/x-www-form-urlencoded"})
-    .send({grant_type: "authorization_code", client_id: 'I6MVEHHYVS3LD42Z46&', client_secret:'V5MDVXPPD7JY5HNODIESMFVP32R63FXOCQS3ONC276SNQQTYBQ', code: `${code}`, redirect_uri: 'https://warm-bastion-62347.herokuapp.com/api/eventbrite/token' })
+    .send({grant_type:"authorization_code", client_id:'I6MVEHHYVS3LD42Z46', client_secret:'V5MDVXPPD7JY5HNODIESMFVP32R63FXOCQS3ONC276SNQQTYBQ', code: `${code}`, redirect_uri: 'https://warm-bastion-62347.herokuapp.com/api/eventbrite/token' })
     .end(function (response) {
       console.log(response.body);
       res.send('success')
