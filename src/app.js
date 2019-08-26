@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const session = require('express-session')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
@@ -25,7 +26,13 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption))
 app.use(cors())
 app.use(helmet())
-
+app.use(session({
+  secret: 'jobReel session secret',
+  token: null,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
