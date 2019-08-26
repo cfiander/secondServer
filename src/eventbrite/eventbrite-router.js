@@ -22,6 +22,7 @@ eventbriteRouter
     .end(function (response) {
       userToken = response.body.access_token
       req.session.token = true
+      console.log(req.session, 'string')
       res.redirect('http://localhost:3000/eventbrite')
     });
   })
