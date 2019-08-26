@@ -9,7 +9,7 @@ let userToken;
 eventbriteRouter
   .route(`/`)
   .get((req, res, next) => {
-    console.log(req.session, 'one')
+    console.log(req.session.token, 'one')
     res.send({ url: `https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=I6MVEHHYVS3LD42Z46&redirect_uri=https://warm-bastion-62347.herokuapp.com/api/eventbrite/access` })
   })
 
