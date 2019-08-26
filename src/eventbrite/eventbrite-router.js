@@ -38,11 +38,13 @@ eventbriteRouter
       });
   })
 
-  eventbriteRouter
+eventbriteRouter
   .route(`/categoriesbyID`)
-  .get((req, res, next) => {
+  .post((req, res, next) => {
+    console.log(req.body)
+    const {id} = req.body.id
     const token = userToken
-    unirest.get('https://www.eventbriteapi.com/v3/categories/101/')
+    unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         console.log(response.body);
