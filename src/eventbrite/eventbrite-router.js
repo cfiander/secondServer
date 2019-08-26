@@ -12,7 +12,7 @@ eventbriteRouter
 
 eventbriteRouter
   .route(`/access`)
-  .post((req, res, next) => {
+  .get((req, res, next) => {
     console.log(req)
     res.send('a string')
   })
