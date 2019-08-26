@@ -40,6 +40,7 @@ eventbriteRouter
   .route(`/categoriesbyID`)
   .post((req, res, next) => {
     const {id} = req.body.category
+    console.log(id, 'id string')
     const token = userToken
     unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
