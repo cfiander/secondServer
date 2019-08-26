@@ -38,6 +38,18 @@ eventbriteRouter
       });
   })
 
+  eventbriteRouter
+  .route(`/categoriesbyID`)
+  .get((req, res, next) => {
+    const token = userToken
+    unirest.get('https://www.eventbriteapi.com/v3/categories/101/')
+      .headers({ 'Authorization': `Bearer ${token}` })
+      .end(function (response) {
+        console.log(response.body);
+        res.send(response.body)
+      });
+  })
+
 eventbriteRouter
   .route(`/locations`)
   .post((req, res, next) => {
@@ -47,6 +59,18 @@ eventbriteRouter
     unirest.get(`https://www.eventbriteapi.com/v3/events/search?${location}.address=vancovuer&location.within=10km&expand=venue`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .send({ continuation: "" })
+      .end(function (response) {
+        console.log(response.body);
+        res.send(response.body)
+      });
+  })
+
+eventbriteRouter
+  .route(`/subcategories`)
+  .get((req, res, next) => {
+    const token = userToken
+    unirest.get('https://www.eventbriteapi.com/v3/subcategories?continuation=eyJwYWdlIjogMn0')
+      .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         console.log(response.body);
         res.send(response.body)
@@ -77,7 +101,7 @@ eventbriteRouter
       });
   })
 
-  
+
 
 
 
