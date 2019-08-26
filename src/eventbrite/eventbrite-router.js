@@ -21,7 +21,6 @@ eventbriteRouter
       .send({ grant_type: "authorization_code", client_id: 'I6MVEHHYVS3LD42Z46', client_secret: 'V5MDVXPPD7JY5HNODIESMFVP32R63FXOCQS3ONC276SNQQTYBQ', code: `${code}`, redirect_uri: 'https://warm-bastion-62347.herokuapp.com/api/eventbrite/token' })
       .end(function (response) {
         userToken = response.body.access_token
-        console.log(userToken)
         res.redirect('http://localhost:3000/eventbritesearch')
       });
   })
@@ -33,7 +32,6 @@ eventbriteRouter
     unirest.get('https://www.eventbriteapi.com/v3/categories/')
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
-        console.log(response.body);
         res.send(response.body)
       });
   })
@@ -41,13 +39,12 @@ eventbriteRouter
 eventbriteRouter
   .route(`/categoriesbyID`)
   .post((req, res, next) => {
-    console.log(req.body)
+    console.log(req.body, 'request string')
     const {id} = req.body.id
     const token = userToken
     unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
-        console.log(response.body);
         res.send(response.body)
       });
   })
@@ -62,7 +59,6 @@ eventbriteRouter
       .headers({ 'Authorization': `Bearer ${token}` })
       .send({ continuation: "" })
       .end(function (response) {
-        console.log(response.body);
         res.send(response.body)
       });
   })
@@ -74,22 +70,20 @@ eventbriteRouter
     unirest.get('https://www.eventbriteapi.com/v3/subcategories?continuation=eyJwYWdlIjogMn0')
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
-        console.log(response.body);
         res.send(response.body)
       });
   })
 
-eventbriteRouter
-  .route(`/subcategories`)
-  .get((req, res, next) => {
-    const token = userToken
-    unirest.get('https://www.eventbriteapi.com/v3/subcategories?continuation=eyJwYWdlIjogMn0')
-      .headers({ 'Authorization': `Bearer ${token}` })
-      .end(function (response) {
-        console.log(response.body);
-        res.send(response.body)
-      });
-  })
+// eventbriteRouter
+//   .route(`/subcategories`)
+//   .get((req, res, next) => {
+//     const token = userToken
+//     unirest.get('https://www.eventbriteapi.com/v3/subcategories?continuation=eyJwYWdlIjogMn0')
+//       .headers({ 'Authorization': `Bearer ${token}` })
+//       .end(function (response) {
+//         res.send(response.body)
+//       });
+//   })
 
 eventbriteRouter
   .route(`/events`)
@@ -98,7 +92,6 @@ eventbriteRouter
     unirest.get('https://www.eventbriteapi.com/v3/events/search/?q=javascript')
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
-        console.log(response.body);
         res.send(response.body)
       });
   })
