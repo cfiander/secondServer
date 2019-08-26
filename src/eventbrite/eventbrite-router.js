@@ -9,6 +9,7 @@ let userToken;
 eventbriteRouter
   .route(`/`)
   .get((req, res, next) => {
+    console.log(req.session, 'one')
     res.send({ url: `https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=I6MVEHHYVS3LD42Z46&redirect_uri=https://warm-bastion-62347.herokuapp.com/api/eventbrite/access` })
   })
 
@@ -22,7 +23,7 @@ eventbriteRouter
     .end(function (response) {
       userToken = response.body.access_token
       req.session.token = true
-      console.log(req.session, 'string')
+      console.log(req.session, 'two')
       res.redirect('http://localhost:3000/eventbrite')
     });
   })
