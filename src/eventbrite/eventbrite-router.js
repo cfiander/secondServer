@@ -42,7 +42,7 @@ eventbriteRouter
   .route(`/events`)
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
-    console.log(req.body, 'event string')
+    console.log(req.body.search, 'new event string')
 
     if (!req.body.query  || !req.body.location) {
       throw error({message: 'Query and location are both required fields'})
