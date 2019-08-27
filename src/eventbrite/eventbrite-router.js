@@ -43,7 +43,7 @@ eventbriteRouter
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
     console.log(req.body, 'event string')
-    const { query, location, category, subcategory } = req.body.se
+    const { query, location, category, subcategory } = req.body.search
     unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
