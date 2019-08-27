@@ -46,35 +46,36 @@ eventbriteRouter
     console.log(req.body, 'body string')
     console.log(req.body.search.category, 'category string')
     console.log(req.body.search.subcategory, 'subcategory string')
-    // if (!req.body.search.query  || !req.body.search.location) {
-    //   throw error({message: 'Query and location are both required fields'})
-    // }
-    // if (!req.body.search.category && !req.body.search.subcategory) {
-    //   const { query, location } = req.body.search
-    //   console.log(query, location, 'special string')
-    //   unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
-    //     .headers({ 'Authorization': `Bearer ${token}` })
-    //     .end(function (response) {
-    //       res.send(response.body)
-    //     });
-    // }
-    // if (req.body.search.category && !req.body.search.subcategory) {
-    //   const { query, location, category } = req.body.search
-    //   console.log(query, location, category, 'another string')
-    //   unirest.get(`https://www.eventbriteapi.com/v3/events/search/?category=${category}q=${query}&location.address=${location}&location.within=40km`)
-    //     .headers({ 'Authorization': `Bearer ${token}` })
-    //     .end(function (response) {
-    //       res.send(response.body)
-    //     });
-    // } 
-    // if (req.body.search.category === '' & req.body.search.subcategory) {
+    if (!req.body.search.query  || !req.body.search.location) {
+      throw error({message: 'Query and location are both required fields'})
+    }
+    if (req.body.search.category === '' && req.body.search.subcategory === '') {
+      const { query, location } = req.body.search
+      console.log(query, location, 'special string')
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
+        .headers({ 'Authorization': `Bearer ${token}` })
+        .end(function (response) {
+          res.send(response.body)
+        });
+    }
+    if (req.body.search.category && req.body.search.subcategory === '') {
+      const { query, location, category } = req.body.search
+      console.log(query, location, category, 'another string')
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
+        .headers({ 'Authorization': `Bearer ${token}` })
+        .end(function (response) {
+          res.send(response.body)
+        });
+    } 
+    if (req.body.search.category === '' & req.body.search.subcategory) {
     const { query, location, subcategory } = req.body.search
     console.log(query, location, category, subcategory, 'another string')
-    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&category=${category}&subcategory=${subcategory}`)
+    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
       });
+    }
   })
 
 // eventbriteRouter
