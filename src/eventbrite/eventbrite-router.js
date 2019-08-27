@@ -49,6 +49,7 @@ eventbriteRouter
     }
     if (req.body.category === '' && req.body.subcategory === '') {
       const { query, location } = req.body.search
+      console.log(query, location, 'special string')
       unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
@@ -57,6 +58,7 @@ eventbriteRouter
     }
     if (req.body.category && req.body.subcategory === '') {
       const { query, location, category } = req.body.search
+      console.log(query, location, category, 'another string')
       unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
@@ -64,6 +66,7 @@ eventbriteRouter
         });
     } else {
     const { query, location, category, subcategory } = req.body.search
+    console.log(query, location, category, subcategory, 'another string')
     unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
