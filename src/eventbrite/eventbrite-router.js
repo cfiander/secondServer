@@ -79,35 +79,35 @@ eventbriteRouter
       });
   })
 
-// eventbriteRouter
-//   .route(`/organization`)
-//   .post(jsonBodyParser, (req, res, next) => {
-//     const { id } = req.body.organization
-//     const token = userToken
-//     console.log(token, 'token string')
-//     console.log(req.body, 'venue string one')
-//     console.log(id, 'venute two')
-//     unirest.get(`https://www.eventbriteapi.com/v3/organizations/${id}/`)
-//       .headers({ 'Authorization': `Bearer ${token}` })
-//       .end(function (response) {
-//         res.send(response.body)
-//       });
-//   })
+eventbriteRouter
+  .route(`/organization`)
+  .post(jsonBodyParser, (req, res, next) => {
+    const { id } = req.body.organization
+    const token = userToken
+    console.log(token, 'token string')
+    console.log(req.body, 'venue string one')
+    console.log(id, 'venute two')
+    unirest.get(`https://www.eventbriteapi.com/v3/organizations/${id}/`)
+      .headers({ 'Authorization': `Bearer ${token}` })
+      .end(function (response) {
+        res.send(response.body)
+      });
+  })
 
-// eventbriteRouter
-//   .route(`/venue`)
-//   .post(jsonBodyParser, (req, res, next) => {
-//     const { id } = req.body.venue
-//     const token = userToken
-//     console.log(token, 'token string')
-//     console.log(req.body, 'venue string one')
-//     console.log(id, 'venute two')
-//     unirest.get(`https://www.eventbriteapi.com/v3/venues/${id}/`)
-//       .headers({ 'Authorization': `Bearer ${token}` })
-//       .end(function (response) {
-//         res.send(response.body)
-//       });
-//   })
+eventbriteRouter
+  .route(`/venue`)
+  .post(jsonBodyParser, (req, res, next) => {
+    const { id } = req.body.venue
+    const token = userToken
+    console.log(token, 'token string')
+    console.log(req.body, 'venue string one')
+    console.log(id, 'venute two')
+    unirest.get(`https://www.eventbriteapi.com/v3/venues/${id}/`)
+      .headers({ 'Authorization': `Bearer ${token}` })
+      .end(function (response) {
+        res.send(response.body)
+      });
+  })
 
 
 
