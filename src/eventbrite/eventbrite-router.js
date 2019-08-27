@@ -43,12 +43,33 @@ eventbriteRouter
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
     console.log(req.body, 'event string')
+
+    if (!req.body.query  || !req.body.location) {
+      throw error({message: 'Query and location are both required fields'})
+    }
+    if (!req.body.category && !req.body.subcategory) {
+      const { query, location } = req.body.search
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue`)
+        .headers({ 'Authorization': `Bearer ${token}` })
+        .end(function (response) {
+          res.send(response.body)
+        });
+    }
+    if (req.body.category && !req.body.subcategory) {
+      const { query, location, category } = req.body.search
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}`)
+        .headers({ 'Authorization': `Bearer ${token}` })
+        .end(function (response) {
+          res.send(response.body)
+        });
+    } else {
     const { query, location, category, subcategory } = req.body.search
     unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
       });
+    }
   })
 
 // eventbriteRouter
