@@ -65,10 +65,13 @@ eventbriteRouter
   })
 
 eventbriteRouter
-  .route(`/organization`)
+  .route(`/venue`)
   .post(jsonBodyParser, (req, res, next) => {
     const { id } = req.body.venue
     const token = userToken
+    console.log(token, 'token string')
+    console.log(req.body, 'venue string one')
+    console.log(id, 'venute two')
     unirest.get(`https://www.eventbriteapi.com/v3/venues/${id}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
@@ -77,7 +80,7 @@ eventbriteRouter
   })
 
 eventbriteRouter
-  .route(`/venue`)
+  .route(`/organization`)
   .post(jsonBodyParser, (req, res, next) => {
     const { id } = req.body.organization
     const token = userToken
