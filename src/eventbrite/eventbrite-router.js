@@ -43,15 +43,11 @@ eventbriteRouter
   .route(`/events`)
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
-    console.log(req.body, 'body string')
-    console.log(req.body.search.category, 'category string')
-    console.log(req.body.search.subcategory, 'subcategory string')
     if (!req.body.search.query  || !req.body.search.location) {
       throw error({message: 'Query and location are both required fields'})
     }
     if (req.body.search.category === '' && req.body.search.subcategory === '') {
       const { query, location } = req.body.search
-      console.log(query, location, 'special string')
       unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
@@ -60,22 +56,12 @@ eventbriteRouter
     } 
     if (req.body.search.category) {
       const { query, location, category, subcategory } = req.body.search
-      console.log(query, location, category, subcategory, 'another string')
       unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
         });
     } 
-    // else {
-    // const { query, location, subcategory } = req.body.search
-    // console.log(query, location, category, subcategory, 'brand new string')
-    // unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&subcategories=${subcategory}`)
-    //   .headers({ 'Authorization': `Bearer ${token}` })
-    //   .end(function (response) {
-    //     res.send(response.body)
-    //   });
-    // }
   })
 
 eventbriteRouter
