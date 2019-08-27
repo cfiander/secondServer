@@ -65,10 +65,11 @@ eventbriteRouter
         .end(function (response) {
           res.send(response.body)
         });
-    } else {
-    const { query, location, category, subcategory } = req.body.search
+    } 
+    if (req.body.category === '' & req.body.subcategory) {
+    const { query, location, subcategory } = req.body.search
     console.log(query, location, category, subcategory, 'another string')
-    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}&subcategory=${subcategory}`)
+    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
