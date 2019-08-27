@@ -46,6 +46,8 @@ eventbriteRouter
     if (!req.body.query  || !req.body.location) {
       throw error({message: 'Query and location are both required fields'})
     }
+    console.log(req.body.category)
+    console.log(req.body.subcategory)
     if (req.body.category === '' && req.body.subcategory === '') {
       const { query, location } = req.body.search
       console.log(query, location, 'special string')
