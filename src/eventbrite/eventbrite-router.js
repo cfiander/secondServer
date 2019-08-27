@@ -52,7 +52,7 @@ eventbriteRouter
     if (req.body.search.category === '' && req.body.search.subcategory === '') {
       const { query, location } = req.body.search
       console.log(query, location, 'special string')
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&?expand=venue`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
@@ -61,7 +61,7 @@ eventbriteRouter
     if (req.body.search.category && req.body.search.subcategory === '') {
       const { query, location, category } = req.body.search
       console.log(query, location, category, 'another string')
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&?expand=venue`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
@@ -70,7 +70,7 @@ eventbriteRouter
     if (req.body.search.subcategory !== '') {
     const { query, location, subcategory } = req.body.search
     console.log(query, location, category, subcategory, 'brand new string')
-    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&subcategories=${subcategory}&?expand=venue`)
+    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&subcategories=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
