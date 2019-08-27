@@ -39,28 +39,28 @@ eventbriteRouter
 eventbriteRouter
   .route(`/categoriesbyID`)
   .post(jsonBodyParser, (req, res, next) => {
-    const {id} = req.body.category
+    const {value} = req.body.category
     const token = userToken
-    unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
+    unirest.get(`https://www.eventbriteapi.com/v3/categories/${value}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
       });
   })
 
-eventbriteRouter
-  .route(`/locations`)
-  .post(jsonBodyParser, (req, res, next) => {
-    const token = userToken
-    console.log(req.body.location)
-    const { address } = req.body.location
-    unirest.get(`https://www.eventbriteapi.com/v3/events/search?location.address=${address}&location.within=10km&expand=venue&q=javascript`)
-      .headers({ 'Authorization': `Bearer ${token}` })
-      .send({ continuation: "" })
-      .end(function (response) {
-        res.send(response.body)
-      });
-  })
+// eventbriteRouter
+//   .route(`/locations`)
+//   .post(jsonBodyParser, (req, res, next) => {
+//     const token = userToken
+//     console.log(req.body.location)
+//     const { address } = req.body.location
+//     unirest.get(`https://www.eventbriteapi.com/v3/events/search?location.address=${address}&location.within=10km&expand=venue&q=javascript`)
+//       .headers({ 'Authorization': `Bearer ${token}` })
+//       .send({ continuation: "" })
+//       .end(function (response) {
+//         res.send(response.body)
+//       });
+//   })
 
 eventbriteRouter
   .route(`/subcategories`)
@@ -88,7 +88,8 @@ eventbriteRouter
   .route(`/events`)
   .get((req, res, next) => {
     const token = userToken
-    unirest.get('https://www.eventbriteapi.com/v3/events/search/?q=javascript')
+    const {query, location, category, subcategory}
+    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
