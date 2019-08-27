@@ -48,7 +48,7 @@ eventbriteRouter
     }
     if (req.body.search.category === '' && req.body.search.subcategory === '') {
       const { query, location } = req.body.search
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
@@ -56,7 +56,7 @@ eventbriteRouter
     }
     if (req.body.search.category) {
       const { query, location, category, subcategory } = req.body.search
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
