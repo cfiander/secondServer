@@ -43,15 +43,13 @@ eventbriteRouter
   .route(`/events`)
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
-    console.log(req.body.search, 'new event string')
-
     if (!req.body.query  || !req.body.location) {
       throw error({message: 'Query and location are both required fields'})
     }
     if (req.body.category === '' && req.body.subcategory === '') {
       const { query, location } = req.body.search
       console.log(query, location, 'special string')
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
@@ -60,7 +58,7 @@ eventbriteRouter
     if (req.body.category && req.body.subcategory === '') {
       const { query, location, category } = req.body.search
       console.log(query, location, category, 'another string')
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&category=${category}`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&category=${category}`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
@@ -69,7 +67,7 @@ eventbriteRouter
     if (req.body.category === '' & req.body.subcategory) {
     const { query, location, subcategory } = req.body.search
     console.log(query, location, category, subcategory, 'another string')
-    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=10km&expand=venue&subcategory=${subcategory}`)
+    unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&subcategory=${subcategory}`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
