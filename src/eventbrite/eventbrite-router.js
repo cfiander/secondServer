@@ -65,14 +65,14 @@ eventbriteRouter
   })
 
 eventbriteRouter
-  .route(`/eventbyid`)
+  .route(`/venue`)
   .post(jsonBodyParser, (req, res, next) => {
-    const { id } = req.body.event
+    const { id } = req.body.venue
     const token = userToken
     console.log(token, 'token string')
     console.log(req.body, 'venue string one')
     console.log(id, 'venute two')
-    unirest.get(`https://www.eventbriteapi.com/v3/events/${id}/`)
+    unirest.get(`https://www.eventbriteapi.com/v3/venues/${id}/`)
       .headers({ 'Authorization': `Bearer ${token}` })
       .end(function (response) {
         res.send(response.body)
@@ -94,21 +94,19 @@ eventbriteRouter
       });
   })
 
-eventbriteRouter
-  .route(`/venue`)
-  .post(jsonBodyParser, (req, res, next) => {
-    const { id } = req.body.venue
-    const token = userToken
-    console.log(token, 'token string')
-    console.log(req.body, 'venue string one')
-    console.log(id, 'venute two')
-    unirest.get(`https://www.eventbriteapi.com/v3/venues/${id}/`)
-      .headers({ 'Authorization': `Bearer ${token}` })
-      .end(function (response) {
-        res.send(response.body)
-      });
-  })
-
+  // eventbriteRouter
+  // .route(`/eventbyid`)
+  // .post(jsonBodyParser, (req, res, next) => {
+  //   const { id } = req.body.event
+  //   const token = userToken
+  //   console.log(token, 'token string')
+  //   console.log(req.body, 'venue string one')
+  //   console.log(id, 'venute two')
+  //   unirest.get(`https://www.eventbriteapi.com/v3/events/${id}/`)
+  //     .headers({ 'Authorization': `Bearer ${token}` })
+  //     .end(function (response) {
+  //       res.send(response.body)
+  //     }
 
 
 // eventbriteRouter
