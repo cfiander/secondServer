@@ -12,12 +12,12 @@ jobsRouter
         unirest.get(`https://authenticjobs.com/api/?api_key=${config.AUTHENTIC_JOBS_API_TOKEN}&method=aj.jobs.search&keywords=${jobTitle}&location=${location}&format=json`)
             .end(function (result) {
                 console.log(result.body, "authentic string")
-                if (result.error) throw new Error(result.error)
+                // if (result.error) throw new Error(result.error)
                 // if (result.body.listings.listing === []) {
                 //     res.status(200).send({message: 'Sorry, there were no jobs matching your search'})
                 // } else {
                 res.status(200).error(result.body);
-                }
+                
             })
     })
 
@@ -29,12 +29,12 @@ jobsRouter
         unirest.get(`https://jobs.github.com/positions.json?description=${jobTitle}&location=${location}`)
             .end(jobs => {
                 console.log(jobs.body, "github string")
-                if (jobs.error) throw new Error(jobs.error)
+                // if (jobs.error) throw new Error(jobs.error)
                 // if (jobs.body === []) {
                 //     res.status(200).error({message: 'Sorry, there were no jobs matching your search'})
                 // } else {
                 res.status(200).error(jobs.body);
-                }
+                
             })
 
     })
