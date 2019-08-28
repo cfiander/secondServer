@@ -69,7 +69,7 @@ eventbriteRouter
     const token = userToken
     const {page_number} = req.body.page
     console.log(req.body, 'paginated sring')
-    console.log(page_number, 'page number string')
+    console.log(req.body.page, 'page number string')
     if (!req.body.search.query || !req.body.search.location) {
       throw error({ message: 'Query and location are both required fields' })
     }
