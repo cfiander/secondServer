@@ -68,8 +68,8 @@ eventbriteRouter
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
     const {page_number} = req.body.page
-    console.log(req.body)
-    console.log(page_number)
+    console.log(req.body, 'paginated sring')
+    console.log(page_number, 'page number string')
     if (!req.body.search.query || !req.body.search.location) {
       throw error({ message: 'Query and location are both required fields' })
     }
