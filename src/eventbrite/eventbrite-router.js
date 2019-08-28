@@ -63,35 +63,37 @@ eventbriteRouter
     }
   })
 
-eventbriteRouter
-  .route(`/paginated`)
-  .post(jsonBodyParser, (req, res, next) => {
-    const token = userToken
-    console.log(req.body, 'paginated sring')
-    console.log(req.body.page, 'page number string')
-    if (!req.body.search.query || !req.body.search.location) {
-      throw error({ message: 'Query and location are both required fields' })
-    }
-    if (req.body.search.category === '' && req.body.search.subcategory === '') {
-      const { query, location } = req.body.search
-      const {page_number} = req.body.page
-      console.log(page_number)
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date&continuation=${page_number}`)
-        .headers({ 'Authorization': `Bearer ${token}` })
-        .end(function (response) {
-          res.send(response.body)
-        });
-    }
-    if (req.body.search.category) {
-      const { query, location, category, subcategory} = req.body.search
-      const {page_number} = req.body.page
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date&continuation=${page_number}`)
-        .headers({ 'Authorization': `Bearer ${token}` })
-        .end(function (response) {
-          res.send(response.body)
-        });
-    }
-  })
+
+//eventbrite continuation tokens for event currently not working or depracated
+// eventbriteRouter
+//   .route(`/paginated`)
+//   .post(jsonBodyParser, (req, res, next) => {
+//     const token = userToken
+//     console.log(req.body, 'paginated sring')
+//     console.log(req.body.page, 'page number string')
+//     if (!req.body.search.query || !req.body.search.location) {
+//       throw error({ message: 'Query and location are both required fields' })
+//     }
+//     if (req.body.search.category === '' && req.body.search.subcategory === '') {
+//       const { query, location } = req.body.search
+//       const {page_number} = req.body.page
+//       console.log(page_number)
+//       unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date&continuation=${page_number}`)
+//         .headers({ 'Authorization': `Bearer ${token}` })
+//         .end(function (response) {
+//           res.send(response.body)
+//         });
+//     }
+//     if (req.body.search.category) {
+//       const { query, location, category, subcategory} = req.body.search
+//       const {page_number} = req.body.page
+//       unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date&continuation=${page_number}`)
+//         .headers({ 'Authorization': `Bearer ${token}` })
+//         .end(function (response) {
+//           res.send(response.body)
+//         });
+//     }
+//   })
 
 eventbriteRouter
   .route(`/venue`)
