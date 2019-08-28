@@ -76,7 +76,7 @@ eventbriteRouter
       const { query, location } = req.body.search
       const {page_number} = req.body.page
       console.log(page_number)
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date&page_number=${page_number}`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date&continuation=${page_number}`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
@@ -85,7 +85,7 @@ eventbriteRouter
     if (req.body.search.category) {
       const { query, location, category, subcategory} = req.body.search
       const {page_number} = req.body.page
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date&page_number=${page_number}`)
+      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date&continuation=${page_number}`)
         .headers({ 'Authorization': `Bearer ${token}` })
         .end(function (response) {
           res.send(response.body)
