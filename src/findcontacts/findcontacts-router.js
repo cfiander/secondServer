@@ -13,7 +13,7 @@ hunterRouter
         unirest.get(`https://api.hunter.io/v2/domain-search?domain=${domain}&company=${company}&seniority=${seniority}&department=${department}&limit=50&api_key=${config.HUNTER_API_TOKEN}`)
         .end(function (result) {
             if (result.error) throw new Error(result.error)
-            console.log
+            console.log(result.body, "hunter string")
             res.status(200).send(result.body);
         })
     })
