@@ -14,7 +14,7 @@ jobsRouter
                 console.log(result.body, "authentic string")
                 if (result.error) throw new Error(result.error)
                 if (result.body.listings.listing === []) {
-                    res.status(200).error({message: 'Sorry, there were no jobs matching your search'})
+                    res.status(200).send({message: 'Sorry, there were no jobs matching your search'})
                 } else {
                 res.status(200).error(result.body);
                 }
@@ -31,7 +31,7 @@ jobsRouter
                 console.log(jobs.body, "github string")
                 if (jobs.error) throw new Error(jobs.error)
                 if (jobs.body === []) {
-                    res.status(200).error({message: 'Sorry, there were no jobs matching your search'})
+                    res.status(200).send({message: 'Sorry, there were no jobs matching your search'})
                 } else {
                 res.status(200).error(jobs.body);
                 }
