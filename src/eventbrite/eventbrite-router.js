@@ -25,41 +25,49 @@ eventbriteRouter
       });
   })
 
-
 eventbriteRouter
   .route(`/categoriesbyID`)
   .post(jsonBodyParser, (req, res, next) => {
-    const { id } = req.body.category
-    const token = userToken
-    unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
-      .headers({ 'Authorization': `Bearer ${token}` })
-      .end(function (response) {
-        res.send(response.body)
-      });
+    if ((Object.keys(req.body.category).length === 0)) {
+      return res.status(400).json({
+        error: `Missing category in request body`
+      })
+    } else {
+      const { id } = req.body.category
+      const token = userToken
+      unirest.get(`https://www.eventbriteapi.com/v3/categories/${id}/`)
+        .headers({ 'Authorization': `Bearer ${token}` })
+        .end(function (response) {
+          res.send(response.body)
+        });
+    }
   })
 
 eventbriteRouter
   .route(`/events`)
   .post(jsonBodyParser, (req, res, next) => {
     const token = userToken
-    if (!req.body.search.query || !req.body.search.location) {
-      throw error({ message: 'Query and location are both required fields' })
-    }
-    if (req.body.search.category === '' && req.body.search.subcategory === '') {
-      const { query, location } = req.body.search
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date`)
-        .headers({ 'Authorization': `Bearer ${token}` })
-        .end(function (response) {
-          res.send(response.body)
-        });
-    }
-    if (req.body.search.category) {
-      const { query, location, category, subcategory } = req.body.search
-      unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date`)
-        .headers({ 'Authorization': `Bearer ${token}` })
-        .end(function (response) {
-          res.send(response.body)
-        });
+    if ((Object.keys(req.body.search).length === 0)) {
+      return res.status(400).json({
+        error: `Missing category in request body`
+      })
+    } else {
+      if (req.body.search.category === '' && req.body.search.subcategory === '') {
+        const { query, location } = req.body.search
+        unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&sort_by=date`)
+          .headers({ 'Authorization': `Bearer ${token}` })
+          .end(function (response) {
+            res.send(response.body)
+          });
+      }
+      if (req.body.search.category) {
+        const { query, location, category, subcategory } = req.body.search
+        unirest.get(`https://www.eventbriteapi.com/v3/events/search/?q=${query}&location.address=${location}&location.within=40km&categories=${category}&subcategories=${subcategory}&sort_by=date`)
+          .headers({ 'Authorization': `Bearer ${token}` })
+          .end(function (response) {
+            res.send(response.body)
+          });
+      }
     }
   })
 
