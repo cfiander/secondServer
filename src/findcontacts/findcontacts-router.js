@@ -3,6 +3,7 @@ const hunterRouter = express.Router()
 const unirest = require('unirest')
 const config = require('../config')
 const jsonBodyParser = express.json()
+const { requireAuth } = require('../middleware/jwt-auth')
 
 hunterRouter
   .use(requireAuth)

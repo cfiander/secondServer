@@ -3,6 +3,7 @@ const eventbriteRouter = express.Router()
 const config = require('../config')
 const unirest = require('unirest')
 const jsonBodyParser = express.json()
+const { requireAuth } = require('../middleware/jwt-auth')
 
 eventbriteRouter
   .use(requireAuth)
