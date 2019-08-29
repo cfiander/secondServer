@@ -6,7 +6,7 @@ describe('Jobs Endpoints', function () {
 
     const { expectedAuthenticJobs, expectedGitHubJobs } = helpers.makeJobsFixtures()
 
-    const badSearch = {}
+    const badSearch = { search: { location: 'asdf', jobTitle: 'asdf' } }
 
     describe.only(`Getting jobs from /api/jobs/authentic`, () => {
         context(`Given no jobs`, () => {

@@ -21,6 +21,7 @@ hunterRouter
                             error: `Sorry, no contacts matched your search.`
                         })
                     } else {
+                        console.log(result.body)
                         res.status(200).send(result.body);
                     }
                 })
