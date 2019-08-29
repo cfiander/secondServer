@@ -4,6 +4,9 @@ const config = require('../config')
 const unirest = require('unirest')
 const jsonBodyParser = express.json()
 
+eventbriteRouter
+  .use(requireAuth)
+
 let userToken;
 
 eventbriteRouter

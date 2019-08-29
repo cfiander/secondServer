@@ -4,6 +4,8 @@ const unirest = require('unirest')
 const config = require('../config')
 const jsonBodyParser = express.json()
 
+hunterRouter
+  .use(requireAuth)
 
 hunterRouter
     .route(`/`)

@@ -4,6 +4,8 @@ const unirest = require('unirest')
 const config = require('../config')
 const jsonBodyParser = express.json()
 
+jobsRouter
+  .use(requireAuth)
 
 jobsRouter
     .route(`/authentic`)
