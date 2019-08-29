@@ -17,6 +17,7 @@ hunterRouter
             })
         } else {
             const { domain, company, seniority, department } = req.body.search
+            console.log(req.body)
             unirest.get(`https://api.hunter.io/v2/domain-search?domain=${domain}&company=${company}&seniority=${seniority}&department=${department}&limit=50&api_key=${config.HUNTER_API_TOKEN}`)
                 .end(function (result) {
                     if (result.error) {
