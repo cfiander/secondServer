@@ -6,11 +6,14 @@ describe('Jobs Endpoints', function () {
 
     const { expectedAuthenticJobs, expectedGitHubJobs } = helpers.makeJobsFixtures()
 
-    describe(`Getting jobsfrom /api/jobs/authentic`, () => {
+    const badSearch = {}
+
+    describe.only(`Getting jobs from /api/jobs/authentic`, () => {
         context(`Given no jobs`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
                     .post('/api/jobs/authentic')
+                    .send(badSearch)
                     .expect(500)
             })
         })
@@ -20,10 +23,9 @@ describe('Jobs Endpoints', function () {
             it('responds with 200 and all of the jobs', () => {
                 app.post((req, res, next) => {
                     const jobTitle = 'Uniform Teeth'
-                    const locaiton = 'San Francisco'
+                    const location = 'San Francisco'
                     unirest.get(`https://authenticjobs.com/api/?api_key=${config.AUTHENTIC_JOBS_API_TOKEN}&method=aj.jobs.search&keywords=${jobTitle}&location=${location}&format=json`)
                         .end(function (result) {
-                            if (result.error) throw new Error(result.error)
                             res.status(200).send(result.body);
                         })
                     return supertest(app)
