@@ -11,14 +11,8 @@ jobsRouter
         const {jobTitle, location} = req.body.search
         unirest.get(`https://authenticjobs.com/api/?api_key=${config.AUTHENTIC_JOBS_API_TOKEN}&method=aj.jobs.search&keywords=${jobTitle}&location=${location}&format=json`)
             .end(function (result) {
-                console.log(result.body.listings.listing, "authentic string")
-                if (result.error) throw new Error(result.error)
-                if (result.body.listings.listing === []) {
-                    res.status(200)
-                } else {
-            
-                res.status(200).send(result.body);
-                }
+                if (result.error) throw new Error(result.error)        
+                res.status(200).send(result.body);         
             })
     })
 
@@ -29,7 +23,6 @@ jobsRouter
         const {jobTitle, location} = req.body.search
         unirest.get(`https://jobs.github.com/positions.json?description=${jobTitle}&location=${location}`)
             .end(jobs => {
-                console.log(jobs.body, "github string")
                 if (jobs.error) throw new Error(jobs.error)
                 res.status(200).send(jobs.body);
             })
