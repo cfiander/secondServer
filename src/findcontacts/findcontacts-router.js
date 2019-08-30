@@ -5,8 +5,6 @@ const config = require('../config')
 const jsonBodyParser = express.json()
 const { requireAuth } = require('../middleware/jwt-auth')
 
-hunterRouter
-  .use(requireAuth)
 
 hunterRouter
     .route(`/`)

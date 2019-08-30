@@ -1,64 +1,62 @@
 const app = require('../src/app')
 const helpers = require('./test-helpers')
-const config = require ('../src/config')
+const config = require('../src/config')
+let { token } = require('../src/eventbrite/eventbrite-router')
+var requestOne = require('supertest')('https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=I6MVEHHYVS3LD42Z46&redirect_uri=https://stormy-beyond-18995.herokuapp.com/api/eventbrite/access');
+var requestTwo = require('supertest')(app);
 
-describe('Jobs Endpoints', function () {
+const testUsers = helpers.makeUsersArray()
+const validCreds = { username: testUsers[0].username, password: testUsers[0].password }
+const emptySearch = { category: { }};
+const badCategorySearch = { category: {id: '2999' } };
+const goodCategorySearch = { category: {id: '101' } };
 
-    const { expectedAuthenticJobs, expectedGitHubJobs } = helpers.makeJobsFixtures()
+describe.only('GET /api/events', function () {
 
-    describe(`Getting jobsfrom /api/jobs/authentic`, () => {
-        context(`Given no jobs`, () => {
-            it(`responds with 200 and an empty list`, () => {
+    it('should redirect from the endpoint', function (done) {
+        requestOne
+            .get('/')
+            .set('Accept', 'application/json')
+            .expect(302, done);
+    });
+
+    describe(`Getting categories from /api/eventbrite/categoriesbyID`, () => {
+        context(`Given no category matching id`, () => {
+            it(`responds with 200 and an a nested empty list`, () => {
                 return supertest(app)
-                    .post('/api/jobs/authentic')
-                    .expect(500)
+                    .post('/api/eventbrite/categoriesbyID')
+                    .set('Authorization', helpers.makeAuthHeader(validCreds))
+                    .send(badCategorySearch)
+                    .expect(res => {
+                        console.log(res.body)
+                        expect(res.body).to.eql()
+                    })
             })
         })
 
+        context(`Given an empty search`, () => {
+            it(`responds with a 400`, () => {
+                return supertest(app)
+                    .post('/api/eventbrite/categoriesbyID')
+                    .set('Authorization', helpers.makeAuthHeader(validCreds))
+                    .send(emptySearch)
+                    .expect(400)
+            })
+        })
 
-        context('Given there are authentic API jobs', () => {
+        context('Given there is a category mathching the ID', () => {
             it('responds with 200 and all of the jobs', () => {
-                app.post((req, res, next) => {
-                    const jobTitle = 'Uniform Teeth'
-                    const locaiton = 'San Francisco'
-                    unirest.get(`https://authenticjobs.com/api/?api_key=${config.AUTHENTIC_JOBS_API_TOKEN}&method=aj.jobs.search&keywords=${jobTitle}&location=${location}&format=json`)
-                        .end(function (result) {
-                            if (result.error) throw new Error(result.error)
-                            res.status(200).send(result.body);
-                        })
-                    return supertest(app)
-                        .post('/api/jobs')
-                        .expect(200, expectedAuthenticJobs)
-                })
+                return supertest(app)
+                    .post('/api/eventbrite/categoriesbyID')
+                    .set('Authorization', helpers.makeAuthHeader(validCreds))
+                    .send(goodCategorySearch)
+                    .expect(200)
+                    .expect(res => {
+                        console.log(res.body)
+                        expect(res.body).to.eql()
+                    })
             })
         })
     })
-    describe(`Getting jobs from /api/jobs/github`, () => {
-        context(`Given no jobs`, () => {
-            it(`responds with 200 and an empty list`, () => {
-                return supertest(app)
-                    .post('/api/jobs/github')
-                    .send({ jobTitle: 'Nonsense1234', location: 'Nonsense1234' })
-                    .expect(500)
-            })
-        })
 
-
-        context('Given there are Github API jobs', () => {
-            it('responds with 200 and all of the jobs', () => {
-                app.post((req, res, next) => {
-                    const jobTitle = 'Full-stack'
-                    const locaiton = 'San Diego'
-                    unirest.get(`https://jobs.github.com/positions.json?description=${jobTitle}&location=${location}`)
-                        .end(function (result) {
-                            if (result.error) throw new Error(result.error)
-                            res.status(200).send(result.body);
-                        })
-                    return supertest(app)
-                        .post('/api/jobs')
-                        .expect(200, expectedGitHubJobs)
-                })
-            })
-        })
-    })
-})
+});

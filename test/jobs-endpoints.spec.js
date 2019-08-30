@@ -26,7 +26,7 @@ describe('Jobs Endpoints', function () {
     const gitHubSearch = { search: { location: 'san diego', jobTitle: 'Senior Software Engineer' } }
     const emptySearch = { search: { } };
 
-    describe.only(`Getting jobs from /api/jobs/authentic`, () => {
+    describe(`Getting jobs from /api/jobs/authentic`, () => {
         context(`Given no jobs`, () => {
             it(`responds with 200 and an a nested empty list`, () => {
                 return supertest(app)
@@ -61,7 +61,7 @@ describe('Jobs Endpoints', function () {
         })
     })
 
-    describe.only(`Getting jobs from /api/jobs/github`, () => {
+    describe(`Getting jobs from /api/jobs/github`, () => {
         context(`Given no jobs`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
